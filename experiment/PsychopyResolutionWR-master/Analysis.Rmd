@@ -1,0 +1,33 @@
+---
+title: "Resolution"
+author: "Sara"
+date: "2022-11-04"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+setwd('.')
+
+pacman::p_load(
+  tidyverse,
+  dplyr,
+  ggplot2,
+  gridExtra,
+  viridis
+  )
+```
+
+# Load data
+```{r}
+library(readxl)
+df <- tidyverse::read_csv('C:/Users/sarak/OneDrive - Aarhus Universitet/20102021/Cog sci/3_semester/Perception_action/Per-Act-EXAM/data/ResolutionWR/Data/ResolutionWR_000_001.csv')
+```
+
+```{r}
+ggplot(df, aes(x=TrueColor,y=RespColor))+geom_point()
+Truecolor
+```
+
+
