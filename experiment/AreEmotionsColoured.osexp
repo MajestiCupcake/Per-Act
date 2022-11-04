@@ -1,0 +1,783 @@
+---
+API: 2.1
+OpenSesame: 3.3.12
+Platform: nt
+---
+set width 1024
+set uniform_coordinates yes
+set title "Are Emotions Coloured?"
+set subject_parity even
+set subject_nr 0
+set start experiment
+set sound_sample_size -16
+set sound_freq 48000
+set sound_channels 2
+set sound_buf_size 1024
+set sampler_backend psycho
+set round_decimals 2
+set mouse_backend psycho
+set keyboard_backend psycho
+set height 768
+set fullscreen no
+set form_clicks no
+set foreground white
+set font_underline no
+set font_size 18
+set font_italic no
+set font_family mono
+set font_bold no
+set experiment_path "C:/Users/sarak/OneDrive - Aarhus Universitet/26102021/Cog sci/3_semester/Perception_action/Per-Act-EXAM"
+set disable_garbage_collection yes
+set description "The main experiment item"
+set coordinates uniform
+set compensation 0
+set color_backend psycho
+set clock_backend psycho
+set canvas_backend psycho
+set background black
+
+define form_multiple_choice Demographics
+	set timeout infinite
+	set spacing 10
+	set question "How old are you"
+	__options__
+	Yes
+	No
+	Maybe
+	__end__
+	set margins "50;50;50;50"
+	set form_var response
+	set form_title "Form title"
+	set description "A simple multiple choice item"
+	set button_text Ok
+	set allow_multiple no
+	set advance_immediately no
+	set _theme gray
+
+define sequence block_sequence_1
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run reset_feedback always
+	run emotion_instruction always
+	run emotion_trials always
+	run experimental_trials always
+
+define sequence block_sequence_c_1_1
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run reset_feedback_c_1_1 always
+	run practice_1 always
+
+define sequence block_sequence_c_2
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run reset_feedback_c_2 "[more_practice_color]==y"
+	run practice_2 "[more_practice_color]==y"
+	run more_practice_c_1_1 "[more_practice_color]==y"
+
+define sequence block_sequence_c_p
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run reset_feedback_c_p always
+	run practice_c always
+
+define sketchpad color_decision
+	set duration 0
+	set description "Displays stimuli"
+	draw image center=1 file="[color]" scale=0.9999999999999999 show_if=always x=-288 y=-192 z_index=0
+	draw image center=1 file="[color]" scale=1 show_if=always x=288 y=-192 z_index=0
+	draw rect color="#000000" fill=0 h=256 name=color_left penwidth=1 show_if=always w=256 x=-416 y=-320 z_index=0
+	draw rect color="#000000" fill=0 h=256 name=color_right penwidth=1 show_if=always w=-256 x=416 y=-320 z_index=0
+
+define sketchpad color_decision_1
+	set duration 0
+	set description "Displays stimuli"
+	draw image center=1 file="[color]" scale=0.9999999999999999 show_if=always x=-288 y=-192 z_index=0
+	draw image center=1 file="[color]" scale=1 show_if=always x=288 y=-192 z_index=0
+	draw rect color="#000000" fill=0 h=256 name=color_left penwidth=1 show_if=always w=256 x=-416 y=-320 z_index=0
+	draw rect color="#000000" fill=0 h=256 name=color_right penwidth=1 show_if=always w=-256 x=416 y=-320 z_index=0
+
+define sketchpad color_decision_2
+	set duration 0
+	set description "Displays stimuli"
+	draw image center=1 file="[color]" scale=0.9999999999999999 show_if=always x=-288 y=-192 z_index=0
+	draw image center=1 file="[color]" scale=1 show_if=always x=288 y=-192 z_index=0
+	draw rect color="#000000" fill=0 h=256 name=color_left penwidth=1 show_if=always w=256 x=-416 y=-320 z_index=0
+	draw rect color="#000000" fill=0 h=256 name=color_right penwidth=1 show_if=always w=-256 x=416 y=-320 z_index=0
+
+define sketchpad color_decision_c_p
+	set duration 0
+	set description "Displays stimuli"
+	draw image center=1 file="[color]" scale=0.9999999999999999 show_if=always x=-288 y=-192 z_index=0
+	draw image center=1 file="[color]" scale=1 show_if=always x=288 y=-192 z_index=0
+	draw rect color="#000000" fill=0 h=256 name=color_left penwidth=1 show_if=always w=256 x=-416 y=-320 z_index=0
+	draw rect color="#000000" fill=0 h=256 name=color_right penwidth=1 show_if=always w=-256 x=416 y=-320 z_index=0
+	draw rect color="#000000" fill=0 h=224 penwidth=1 show_if=always w=224 x=-448 y=-320 z_index=0
+	draw rect color="#000000" fill=0 h=224 penwidth=1 show_if=always w=224 x=-384 y=-96 z_index=0
+	draw rect color="#000000" fill=0 h=224 penwidth=1 show_if=always w=224 x=-352 y=0 z_index=0
+
+define sketchpad color_instruction
+	set duration keypress
+	set description "Displays stimuli"
+
+define mouse_response color_mouse
+	set timeout infinite
+	set show_cursor yes
+	set linked_sketchpad ""
+	set flush yes
+	set event_type mouseclick
+	set duration mouseclick
+	set description "Collects mouse responses"
+
+define loop color_practice
+	set source_file ""
+	set source table
+	set repeat 1
+	set order random
+	set description "Repeatedly runs another item"
+	set cycles 1
+	set continuous no
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 practice no
+	run block_sequence_c_p
+
+define loop color_practice_1_1
+	set source_file ""
+	set source table
+	set repeat 1
+	set order random
+	set description "Repeatedly runs another item"
+	set cycles 1
+	set continuous no
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 practice yes
+	run block_sequence_c_1_1
+
+define sketchpad emotion_instruction
+	set duration keypress
+	set description "Displays stimuli"
+
+define loop emotion_trials
+	set source_file ""
+	set source table
+	set repeat 1
+	set order random
+	set description "Repeatedly runs another item"
+	set cycles 1
+	set continuous no
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 empty_column ""
+	run new_sequence_1_1
+
+define form_text_display end_of_experiment
+	set timeout infinite
+	set spacing 10
+	set rows "1;4;1"
+	set only_render no
+	set ok_text Ok
+	set margins "50;50;50;50"
+	set form_title Title
+	set form_text "Your message"
+	set description "A simple text display form"
+	set cols "1;1;1"
+	set _theme gray
+	widget 0 0 3 1 label text="[form_title]"
+	widget 0 1 3 1 label center=no text="[form_text]"
+	widget 1 2 1 1 button text="[ok_text]"
+
+
+define sequence experiment
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run welcome always
+	run new_form_consent always
+	run Demographics always
+	run new_logger_3 always
+	run color_instruction always
+	run color_practice always
+	run more_practice_color_question always
+	run more_practice_color always
+	run color_practice_1_1 always
+	run block_sequence_c_2 always
+	run experimental_loop always
+	run end_of_experiment always
+
+define loop experimental_loop
+	set source_file ""
+	set source table
+	set repeat 1
+	set order random
+	set description "Repeatedly runs another item"
+	set cycles 1
+	set continuous no
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 empty_column ""
+	run block_sequence_1
+
+define loop experimental_trials
+	set source_file ""
+	set source table
+	set repeat 1
+	set order random
+	set description "Repeatedly runs another item"
+	set cycles 1
+	set continuous no
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 empty_column ""
+	run new_sequence_1_1_1
+
+define sketchpad fixation
+	set start_response_interval no
+	set duration 1000
+	set description "Displays stimuli"
+	draw fixdot color=white show_if=always style=default x=0 y=160 z_index=0
+
+define sketchpad fixation_1
+	set start_response_interval no
+	set duration 1000
+	set description "Displays stimuli"
+	draw fixdot color=white show_if=always style=default x=0 y=160 z_index=0
+
+define sketchpad fixation_2
+	set start_response_interval no
+	set duration 1000
+	set description "Displays stimuli"
+	draw fixdot color=white show_if=always style=default x=0 y=160 z_index=0
+
+define sketchpad fixation_3
+	set start_response_interval no
+	set description "Displays stimuli"
+
+define sketchpad fixation_c
+	set start_response_interval no
+	set duration 500
+	set description "Displays stimuli"
+	draw fixdot color=white show_if=always style=default x=0 y=160 z_index=0
+
+define logger logger_c_p
+	set description "Logs experimental data"
+	set auto_log yes
+
+define sketchpad more_practice_c_1_1
+	set duration keypress
+	set description "asks participant to take a break and whether they want more practice"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="Nice!<br /><br />Take a little break<br /><br /><br />Press any key to proceed to test trials." x=0 y=-32 z_index=0
+
+define keyboard_response more_practice_color
+	set timeout infinite
+	set flush yes
+	set event_type keypress
+	set duration keypress
+	set description "Collects keyboard responses"
+	set correct_response "y;p"
+	set allowed_responses "y;p"
+
+define keyboard_response more_practice_color_1
+	set timeout infinite
+	set flush yes
+	set event_type keypress
+	set duration keypress
+	set description "Collects keyboard responses"
+	set correct_response "y;p"
+	set allowed_responses "y;p"
+
+define sketchpad more_practice_color_question
+	set duration keypress
+	set description "asks participant to take a break and whether they want more practice"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="Nice!<br /><br />Take a little break<br /><br />Do you want more practice trials?<br /><br />Press <br />y for yes and <br />p for let's proceed with test trials" x=0 y=-32 z_index=0
+
+define mouse_response mouse_response_c_p
+	set show_cursor no
+	set linked_sketchpad ""
+	set flush no
+	set event_type mouseclick
+	set duration mouseclick
+	set description "Collects mouse responses"
+	set allowed_responses "color_left;color_right"
+
+define form_consent new_form_consent
+	set timeout infinite
+	set spacing 10
+	set rows "1;4;1;1"
+	set only_render no
+	set margins "50;50;50;50"
+	set form_title "Consent form"
+	__form_text__
+	You are about to participate in an experiment.
+	
+	This experiment poses no known risks to your health and your name will not be associated with the findings.
+	
+	Upon completion of your participation in this study you will be provided with a brief explanation of the question this study addresses.
+	
+	If you have any questions not addressed by this consent form, please do not hesitate to ask.
+	
+	You can stop at any time during experiment if you feel uncomfortable.
+	__end__
+	set description "A simple consent form"
+	set decline_text "Do not participate"
+	set decline_message "You need to accept the consent form to participate!"
+	set cols "2;2"
+	set checkbox_text "I have read and understood the information shown above"
+	set accept_text "Participate!"
+	set _theme gray
+	widget 0 0 2 1 label text="[form_title]"
+	widget 0 1 2 1 label center=no text="[form_text]"
+	widget 0 2 2 1 checkbox text="[checkbox_text]" var=checkbox_status
+	widget 0 3 1 1 button text="[accept_text]" var=accept_status
+	widget 1 3 1 1 button text="[decline_text]"
+
+
+define logger new_logger
+	set description "Logs experimental data"
+	set auto_log yes
+
+define logger new_logger_1
+	set description "Logs experimental data"
+	set auto_log yes
+
+define logger new_logger_1_1
+	set description "Logs experimental data"
+	set auto_log yes
+
+define logger new_logger_2
+	set description "Logs experimental data"
+	set auto_log yes
+
+define logger new_logger_2_1
+	set description "Logs experimental data"
+	set auto_log yes
+
+define logger new_logger_2_2
+	set description "Logs experimental data"
+	set auto_log yes
+
+define logger new_logger_3
+	set description "Logs experimental data"
+	set auto_log yes
+
+define mouse_response new_mouse_response
+	set timeout infinite
+	set show_cursor yes
+	set linked_sketchpad ""
+	set flush yes
+	set event_type mouseclick
+	set duration mouseclick
+	set description "Collects mouse responses"
+
+define mouse_response new_mouse_response_1
+	set timeout infinite
+	set show_cursor yes
+	set linked_sketchpad ""
+	set flush yes
+	set event_type mouseclick
+	set duration mouseclick
+	set description "Collects mouse responses"
+
+define mouse_response new_mouse_response_1_1
+	set timeout infinite
+	set show_cursor yes
+	set linked_sketchpad ""
+	set flush yes
+	set event_type mouseclick
+	set duration mouseclick
+	set description "Collects mouse responses"
+
+define mouse_response new_mouse_response_2_1
+	set timeout infinite
+	set show_cursor yes
+	set linked_sketchpad ""
+	set flush yes
+	set event_type mouseclick
+	set duration mouseclick
+	set description "Collects mouse responses"
+
+define mouse_response new_mouse_response_2_2
+	set timeout infinite
+	set show_cursor yes
+	set linked_sketchpad ""
+	set flush yes
+	set event_type mouseclick
+	set duration mouseclick
+	set description "Collects mouse responses"
+
+define sequence new_sequence
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+
+define sequence new_sequence_1
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run new_sketchpad_3 always
+	run new_sketchpad_1 always
+	run new_sketchpad_2 always
+	run new_mouse_response always
+	run new_logger always
+
+define sequence new_sequence_1_1
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run new_sketchpad_3_1 always
+	run new_sketchpad_1_1 always
+	run new_sketchpad_2_1 always
+	run new_mouse_response_1 always
+	run new_logger_1 always
+
+define sequence new_sequence_1_1_1
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run new_sketchpad_3_1_1 always
+	run new_sketchpad_1_1_1 always
+	run new_sketchpad_2_1_1 always
+	run new_mouse_response_1_1 always
+	run new_logger_1_1 always
+
+define sequence new_sequence_2
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+
+define sketchpad new_sketchpad_1
+	set duration keypress
+	set description "Displays stimuli"
+
+define sketchpad new_sketchpad_1_1
+	set duration keypress
+	set description "Displays stimuli"
+
+define sketchpad new_sketchpad_1_1_1
+	set duration keypress
+	set description "Displays stimuli"
+
+define sketchpad new_sketchpad_2
+	set duration keypress
+	set description "Displays stimuli"
+
+define sketchpad new_sketchpad_2_1
+	set duration keypress
+	set description "Displays stimuli"
+
+define sketchpad new_sketchpad_2_1_1
+	set duration keypress
+	set description "Displays stimuli"
+
+define sketchpad new_sketchpad_2_2
+	set duration keypress
+	set description "Displays stimuli"
+
+define sketchpad new_sketchpad_3
+	set duration keypress
+	set description "Displays stimuli"
+
+define sketchpad new_sketchpad_3_1
+	set duration keypress
+	set description "Displays stimuli"
+
+define sketchpad new_sketchpad_3_1_1
+	set duration keypress
+	set description "Displays stimuli"
+
+define loop practice_1
+	set source_file ""
+	set source table
+	set repeat 1
+	set order random
+	set description "Repeatedly runs another item"
+	set cycles 30
+	set continuous no
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 trial_type "yellow-green"
+	setcycle 0 color_left "#FFFF00"
+	setcycle 0 color_right "#20FF00"
+	setcycle 1 trial_type "yellow-blue"
+	setcycle 1 color_left "#FFFF00"
+	setcycle 1 color_right "#0000FF"
+	setcycle 2 trial_type "yellow-black"
+	setcycle 2 color_left "#FFFF00"
+	setcycle 2 color_right "#000000"
+	setcycle 3 trial_type "yellow-red"
+	setcycle 3 color_left "#FFFF00"
+	setcycle 3 color_right "#FF0000"
+	setcycle 4 trial_type "yellow-white"
+	setcycle 4 color_left "#FFFF00"
+	setcycle 4 color_right "#FFFFFF"
+	setcycle 5 trial_type "red-green"
+	setcycle 5 color_left "#FF0000"
+	setcycle 5 color_right "#20FF00"
+	setcycle 6 trial_type "red-blue"
+	setcycle 6 color_left "#FF0000"
+	setcycle 6 color_right "#0000FF"
+	setcycle 7 trial_type "red-black"
+	setcycle 7 color_left "#FF0000"
+	setcycle 7 color_right "#000000"
+	setcycle 8 trial_type "red-white"
+	setcycle 8 color_left "#FF0000"
+	setcycle 8 color_right "#FFFFFF"
+	setcycle 9 trial_type "red-yellow"
+	setcycle 9 color_left "#FF0000"
+	setcycle 9 color_right "#FFFF00"
+	setcycle 10 trial_type "blue-green"
+	setcycle 10 color_left "#0000FF"
+	setcycle 10 color_right "#20FF00"
+	setcycle 11 trial_type "blue-black"
+	setcycle 11 color_left "#0000FF"
+	setcycle 11 color_right "#000000"
+	setcycle 12 trial_type "blue-red"
+	setcycle 12 color_left "#0000FF"
+	setcycle 12 color_right "#FF0000"
+	setcycle 13 trial_type "blue-white"
+	setcycle 13 color_left "#0000FF"
+	setcycle 13 color_right "#FFFFFF"
+	setcycle 14 trial_type "blue-yellow"
+	setcycle 14 color_left "#0000FF"
+	setcycle 14 color_right "#FFFF00"
+	setcycle 15 trial_type "green-blue"
+	setcycle 15 color_left "#20FF00"
+	setcycle 15 color_right "#0000FF"
+	setcycle 16 trial_type "green-black"
+	setcycle 16 color_left "#20FF00"
+	setcycle 16 color_right "#000000"
+	setcycle 17 trial_type "green-red"
+	setcycle 17 color_left "#20FF00"
+	setcycle 17 color_right "#FF0000"
+	setcycle 18 trial_type "green-white"
+	setcycle 18 color_left "#20FF00"
+	setcycle 18 color_right "#FFFFFF"
+	setcycle 19 trial_type "green-yellow"
+	setcycle 19 color_left "#20FF00"
+	setcycle 19 color_right "#FFFF00"
+	setcycle 20 trial_type "white-blue"
+	setcycle 20 color_left "#000000"
+	setcycle 20 color_right "#0000FF"
+	setcycle 21 trial_type "white-black"
+	setcycle 21 color_left "#000000"
+	setcycle 21 color_right "#FFFFFF"
+	setcycle 22 trial_type "white-red"
+	setcycle 22 color_left "#000000"
+	setcycle 22 color_right "#FF0000"
+	setcycle 23 trial_type "white-green"
+	setcycle 23 color_left "#000000"
+	setcycle 23 color_right "#20FF00"
+	setcycle 24 trial_type "white-yellow"
+	setcycle 24 color_left "#000000"
+	setcycle 24 color_right "#FFFF00"
+	setcycle 25 trial_type "black-blue"
+	setcycle 25 color_left "#FFFFFF"
+	setcycle 25 color_right "#0000FF"
+	setcycle 26 trial_type "black-white"
+	setcycle 26 color_left "#FFFFFF"
+	setcycle 26 color_right "#000000"
+	setcycle 27 trial_type "black-red"
+	setcycle 27 color_left "#000000"
+	setcycle 27 color_right "#FF0000"
+	setcycle 28 trial_type "black-green"
+	setcycle 28 color_left "#000000"
+	setcycle 28 color_right "#20FF00"
+	setcycle 29 trial_type "black-yellow"
+	setcycle 29 color_left "#000000"
+	setcycle 29 color_right "#FFFF00"
+	run practice_sequence_1
+
+define loop practice_2
+	set source_file ""
+	set source table
+	set repeat 1
+	set order random
+	set description "Repeatedly runs another item"
+	set cycles 30
+	set continuous no
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 trial_type "yellow-green"
+	setcycle 0 color_left "#FFFF00"
+	setcycle 0 color_right "#20FF00"
+	setcycle 1 trial_type "yellow-blue"
+	setcycle 1 color_left "#FFFF00"
+	setcycle 1 color_right "#0000FF"
+	setcycle 2 trial_type "yellow-black"
+	setcycle 2 color_left "#FFFF00"
+	setcycle 2 color_right "#000000"
+	setcycle 3 trial_type "yellow-red"
+	setcycle 3 color_left "#FFFF00"
+	setcycle 3 color_right "#FF0000"
+	setcycle 4 trial_type "yellow-white"
+	setcycle 4 color_left "#FFFF00"
+	setcycle 4 color_right "#FFFFFF"
+	setcycle 5 trial_type "red-green"
+	setcycle 5 color_left "#FF0000"
+	setcycle 5 color_right "#20FF00"
+	setcycle 6 trial_type "red-blue"
+	setcycle 6 color_left "#FF0000"
+	setcycle 6 color_right "#0000FF"
+	setcycle 7 trial_type "red-black"
+	setcycle 7 color_left "#FF0000"
+	setcycle 7 color_right "#000000"
+	setcycle 8 trial_type "red-white"
+	setcycle 8 color_left "#FF0000"
+	setcycle 8 color_right "#FFFFFF"
+	setcycle 9 trial_type "red-yellow"
+	setcycle 9 color_left "#FF0000"
+	setcycle 9 color_right "#FFFF00"
+	setcycle 10 trial_type "blue-green"
+	setcycle 10 color_left "#0000FF"
+	setcycle 10 color_right "#20FF00"
+	setcycle 11 trial_type "blue-black"
+	setcycle 11 color_left "#0000FF"
+	setcycle 11 color_right "#000000"
+	setcycle 12 trial_type "blue-red"
+	setcycle 12 color_left "#0000FF"
+	setcycle 12 color_right "#FF0000"
+	setcycle 13 trial_type "blue-white"
+	setcycle 13 color_left "#0000FF"
+	setcycle 13 color_right "#FFFFFF"
+	setcycle 14 trial_type "blue-yellow"
+	setcycle 14 color_left "#0000FF"
+	setcycle 14 color_right "#FFFF00"
+	setcycle 15 trial_type "green-blue"
+	setcycle 15 color_left "#20FF00"
+	setcycle 15 color_right "#0000FF"
+	setcycle 16 trial_type "green-black"
+	setcycle 16 color_left "#20FF00"
+	setcycle 16 color_right "#000000"
+	setcycle 17 trial_type "green-red"
+	setcycle 17 color_left "#20FF00"
+	setcycle 17 color_right "#FF0000"
+	setcycle 18 trial_type "green-white"
+	setcycle 18 color_left "#20FF00"
+	setcycle 18 color_right "#FFFFFF"
+	setcycle 19 trial_type "green-yellow"
+	setcycle 19 color_left "#20FF00"
+	setcycle 19 color_right "#FFFF00"
+	setcycle 20 trial_type "white-blue"
+	setcycle 20 color_left "#000000"
+	setcycle 20 color_right "#0000FF"
+	setcycle 21 trial_type "white-black"
+	setcycle 21 color_left "#000000"
+	setcycle 21 color_right "#FFFFFF"
+	setcycle 22 trial_type "white-red"
+	setcycle 22 color_left "#000000"
+	setcycle 22 color_right "#FF0000"
+	setcycle 23 trial_type "white-green"
+	setcycle 23 color_left "#000000"
+	setcycle 23 color_right "#20FF00"
+	setcycle 24 trial_type "white-yellow"
+	setcycle 24 color_left "#000000"
+	setcycle 24 color_right "#FFFF00"
+	setcycle 25 trial_type "black-blue"
+	setcycle 25 color_left "#FFFFFF"
+	setcycle 25 color_right "#0000FF"
+	setcycle 26 trial_type "black-white"
+	setcycle 26 color_left "#FFFFFF"
+	setcycle 26 color_right "#000000"
+	setcycle 27 trial_type "black-red"
+	setcycle 27 color_left "#000000"
+	setcycle 27 color_right "#FF0000"
+	setcycle 28 trial_type "black-green"
+	setcycle 28 color_left "#000000"
+	setcycle 28 color_right "#20FF00"
+	setcycle 29 trial_type "black-yellow"
+	setcycle 29 color_left "#000000"
+	setcycle 29 color_right "#FFFF00"
+	run practice_sequence_2
+
+define loop practice_c
+	set source table
+	set repeat 1
+	set order random
+	set description "Repeatedly runs another item"
+	set cycles 5
+	set continuous no
+	set break_if_on_first no
+	set break_if never
+	setcycle 0 trial_type "purple-orange"
+	setcycle 0 color_left "#F000B6"
+	setcycle 0 color_right "#F07F00"
+	setcycle 1 trial_type "turqiouse-purple"
+	setcycle 1 color_left "#00F0E7"
+	setcycle 1 color_right "#F000B6"
+	setcycle 2 trial_type "orange-turqiouse"
+	setcycle 2 color_left "#F07F00"
+	setcycle 2 color_right "#00F0E7"
+	setcycle 3 trial_type "lime-purple"
+	setcycle 3 color_left "#00F08A"
+	setcycle 3 color_right "#F000B6"
+	setcycle 4 trial_type "orange-lime"
+	setcycle 4 color_left "#F07F00"
+	setcycle 4 color_right "#00F08A"
+	run practice_sequence_c_1
+
+define sequence practice_sequence_1
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run fixation_1 always
+	run color_decision_1 always
+	run new_mouse_response_2_2 always
+	run new_logger_2_2 always
+
+define sequence practice_sequence_2
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run fixation_2 always
+	run color_decision_2 always
+	run new_mouse_response_2_1 always
+	run new_logger_2_1 always
+
+define sequence practice_sequence_c
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run fixation always
+	run color_decision always
+	run color_mouse always
+	run new_logger_2 always
+
+define sequence practice_sequence_c_1
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run fixation_c always
+	run color_decision_c_p always
+	run mouse_response_c_p always
+	run logger_c_p always
+
+define reset_feedback reset_feedback
+	set description "Resets the feedback variables, such as 'avg_rt' and 'acc'"
+
+define reset_feedback reset_feedback_1
+	set description "Resets the feedback variables, such as 'avg_rt' and 'acc'"
+
+define reset_feedback reset_feedback_2
+	set description "Resets the feedback variables, such as 'avg_rt' and 'acc'"
+
+define reset_feedback reset_feedback_c_1_1
+	set description "Resets the feedback variables, such as 'avg_rt' and 'acc'"
+
+define reset_feedback reset_feedback_c_2
+	set description "Resets the feedback variables, such as 'avg_rt' and 'acc'"
+
+define reset_feedback reset_feedback_c_p
+	set description "Resets the feedback variables, such as 'avg_rt' and 'acc'"
+
+define sketchpad stimuli_1
+	set duration 0
+	set description "Displays stimuli"
+	draw image center=1 file="[left_picture]" scale=0.9999999999999999 show_if=always x=-288 y=-192 z_index=0
+	draw image center=1 file="[right_picture]" scale=1 show_if=always x=288 y=-192 z_index=0
+	draw rect color="#000000" fill=0 h=256 name=left_button penwidth=1 show_if=always w=256 x=-416 y=-320 z_index=0
+	draw rect color="#000000" fill=0 h=256 name=right_button penwidth=1 show_if=always w=-256 x=416 y=-320 z_index=0
+
+define sketchpad welcome
+	set start_response_interval no
+	set reset_variables no
+	set duration keypress
+	set description "Displays stimuli"
+	draw textline center=1 color=white font_bold=no font_family=serif font_italic=no font_size=32 html=yes show_if=always text="Thank you for participating!<br /><br />The experiment is divided into 3 blocks with both practice and test trials.<br /><br />You can have as many practice trials as you like, and please ask the experimenter about any doubts.<br /><br />Press any key to proceed to the 1. block:" x=5 y=-233 z_index=0
+	draw textline center=1 color="#ffffff" font_bold=no font_family=serif font_italic=no font_size=32 html=yes show_if=always text=C x=-57 y=-35 z_index=0
+	draw textline center=1 color="#ffff00" font_bold=no font_family=serif font_italic=no font_size=32 html=yes show_if=always text=O x=-32 y=-32 z_index=0
+	draw textline center=1 color="#00ff00" font_bold=no font_family=serif font_italic=no font_size=32 html=yes show_if=always text=L x=2 y=-37 z_index=0
+	draw textline center=1 color="#ff0000" font_bold=no font_family=serif font_italic=no font_size=32 html=yes show_if=always text=O x=32 y=-32 z_index=0
+	draw textline center=1 color="#0000ff" font_bold=no font_family=serif font_italic=no font_size=32 html=yes show_if=always text=U x=70 y=-35 z_index=0
+	draw textline center=1 color="#3a3a3a" font_bold=no font_family=serif font_italic=no font_size=32 html=yes show_if=always text=R x=92 y=-35 z_index=0
+
